@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -17,10 +17,18 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
   const [fatAdjustment, setFatAdjustment] = useState(0);
   const [carbAdjustment, setCarbAdjustment] = useState(0);
   
+  const handleReset = useCallback(() => {
+    setCalorieAdjustment(0);
+    setProteinAdjustment(0);
+    setFatAdjustment(0);
+    setCarbAdjustment(0);
+    onMacrosChange(baseMacros);
+  }, [baseMacros, onMacrosChange]);
+
   // Reset adjustments when base macros change (i.e., when weight changes)
   useEffect(() => {
     handleReset();
-  }, [baseMacros]);
+  }, [handleReset]);
 
   // Handle adjustments
   const handleCalorieChange = (value: number) => {
@@ -59,14 +67,6 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
       carbs
     );
     onMacrosChange(updatedMacros);
-  };
-
-  const handleReset = () => {
-    setCalorieAdjustment(0);
-    setProteinAdjustment(0);
-    setFatAdjustment(0);
-    setCarbAdjustment(0);
-    onMacrosChange(baseMacros);
   };
 
   // Calculate exact macro calorie impacts

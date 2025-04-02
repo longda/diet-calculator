@@ -76,7 +76,6 @@ export default function Home() {
   const carbPercentage = Math.round((adjustedMacros.carbCalories / totalCalories) * 100);
 
   // Calculate differences
-  const calorieDiff = adjustedMacros.totalCalories - baseMacros.totalCalories;
   const proteinDiff = adjustedMacros.proteinGrams - baseMacros.proteinGrams;
   const fatDiff = adjustedMacros.fatGrams - baseMacros.fatGrams;
   const carbDiff = adjustedMacros.carbGrams - baseMacros.carbGrams;
