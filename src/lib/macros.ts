@@ -48,4 +48,50 @@ export function calculateMacros(weight: number): MacroCalculation {
     carbGrams,
     carbCalories,
   };
+}
+
+/**
+ * Adjust macro calculation based on calorie and macronutrient adjustments
+ * 
+ * @param baseMacros The base macronutrient calculation
+ * @param calorieAdjustment Adjustment to total calories (positive or negative)
+ * @param proteinAdjustment Adjustment to protein grams (positive or negative)
+ * @param fatAdjustment Adjustment to fat grams (positive or negative)
+ * @returns Adjusted MacroCalculation object
+ */
+export function adjustMacros(
+  baseMacros: MacroCalculation,
+  calorieAdjustment: number = 0,
+  proteinAdjustment: number = 0,
+  fatAdjustment: number = 0
+): MacroCalculation {
+  // Adjust protein
+  const adjustedProteinGrams = Math.max(0, baseMacros.proteinGrams + proteinAdjustment);
+  const adjustedProteinCalories = Math.round(adjustedProteinGrams * 4);
+  
+  // Adjust fat
+  const adjustedFatGrams = Math.max(0, baseMacros.fatGrams + fatAdjustment);
+  const adjustedFatCalories = Math.round(adjustedFatGrams * 9);
+  
+  // Adjust total calories, ensuring it's not less than protein+fat calories
+  const minCalories = adjustedProteinCalories + adjustedFatCalories;
+  const adjustedTotalCalories = Math.max(
+    minCalories,
+    baseMacros.totalCalories + calorieAdjustment
+  );
+  
+  // Calculate remaining calories for carbs
+  const remainingForCarbs = Math.max(0, adjustedTotalCalories - adjustedProteinCalories - adjustedFatCalories);
+  const adjustedCarbGrams = Math.round(remainingForCarbs / 4);
+  const adjustedCarbCalories = remainingForCarbs;
+  
+  return {
+    totalCalories: adjustedTotalCalories,
+    proteinGrams: adjustedProteinGrams,
+    proteinCalories: adjustedProteinCalories,
+    fatGrams: adjustedFatGrams,
+    fatCalories: adjustedFatCalories,
+    carbGrams: adjustedCarbGrams,
+    carbCalories: adjustedCarbCalories,
+  };
 } 
