@@ -47,9 +47,17 @@ export function MacroChart({ macros }: MacroChartProps) {
   // Chart options
   const options: ChartOptions<'pie'> = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       legend: {
         position: 'bottom',
+        labels: {
+          boxWidth: 12,
+          padding: 10,
+          font: {
+            size: 11
+          }
+        }
       },
       tooltip: {
         callbacks: {
@@ -65,9 +73,8 @@ export function MacroChart({ macros }: MacroChartProps) {
   };
 
   return (
-    <div className="max-w-xs mx-auto mt-4">
-      <h3 className="text-center font-medium mb-4">Macro Distribution</h3>
-      <Pie data={data} options={options} />
+    <div className="max-w-full mx-auto">
+      <Pie data={data} options={options} height={180} />
     </div>
   );
 } 

@@ -82,157 +82,168 @@ export default function Home() {
   const carbDiff = adjustedMacros.carbGrams - baseMacros.carbGrams;
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-4xl">
-      <h1 className="text-3xl font-bold text-center mb-8">
+    <div className="container mx-auto py-4 px-4 max-w-7xl">
+      <h1 className="text-2xl font-bold text-center mb-4">
         Diet, Calories, and Macro Calculator
       </h1>
 
-      <div className="grid gap-8">
-        {/* Input Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Input Your Information</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-4">
-              <div>
-                <label htmlFor="weight" className="block mb-2 text-sm font-medium">
-                  Weight (lbs)
-                </label>
-                <div className="flex gap-2">
-                  <div className="flex flex-col w-full max-w-xs">
-                    <Input
-                      id="weight"
-                      type="number"
-                      placeholder="220"
-                      value={weight}
-                      onChange={handleWeightChange}
-                      onKeyDown={handleKeyDown}
-                      aria-invalid={!!error}
-                      aria-describedby={error ? "weight-error" : undefined}
-                    />
-                    {error && (
-                      <p id="weight-error" className="text-sm text-red-500 mt-1">
-                        {error}
-                      </p>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-12">
+        {/* Left Column - Input + Chart */}
+        <div className="flex flex-col gap-4 md:col-span-1 xl:col-span-5">
+          {/* Input Section */}
+          <Card className="flex-none">
+            <CardHeader className="py-4">
+              <CardTitle className="text-lg">Input Your Information</CardTitle>
+            </CardHeader>
+            <CardContent className="py-2">
+              <div className="flex flex-col gap-3">
+                <div>
+                  <label htmlFor="weight" className="block mb-1 text-sm font-medium">
+                    Weight (lbs)
+                  </label>
+                  <div className="flex gap-2">
+                    <div className="flex flex-col w-full">
+                      <Input
+                        id="weight"
+                        type="number"
+                        placeholder="220"
+                        value={weight}
+                        onChange={handleWeightChange}
+                        onKeyDown={handleKeyDown}
+                        aria-invalid={!!error}
+                        aria-describedby={error ? "weight-error" : undefined}
+                      />
+                      {error && (
+                        <p id="weight-error" className="text-sm text-red-500 mt-1">
+                          {error}
+                        </p>
+                      )}
+                    </div>
+                    <Button onClick={handleCalculate} className="shrink-0">Calculate</Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Chart */}
+          <Card className="flex-none">
+            <CardHeader className="py-4">
+              <CardTitle className="text-lg">Macro Distribution</CardTitle>
+            </CardHeader>
+            <CardContent className="py-2">
+              <MacroChart macros={adjustedMacros} />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right Column - Results + Adjustments */}
+        <div className="flex flex-col gap-4 md:col-span-1 xl:col-span-7">
+          {/* Results Section - More compact */}
+          <Card className="flex-none">
+            <CardHeader className="py-4 flex flex-row items-center justify-between">
+              <CardTitle className="text-lg">Your Results</CardTitle>
+              {isAdjusted && (
+                <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 rounded-full">
+                  Adjusted
+                </span>
+              )}
+            </CardHeader>
+            <CardContent className="py-2">
+              <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
+                <div className="p-3 rounded-lg bg-slate-100 dark:bg-slate-800">
+                  <h3 className="text-sm font-medium mb-1">Total Calories</h3>
+                  <div className="flex items-center gap-1">
+                    <p className="text-xl font-bold">{adjustedMacros.totalCalories}</p>
+                    {calorieDiff !== 0 && (
+                      <span className={`text-xs font-medium ${calorieDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {calorieDiff > 0 ? '+' : ''}{calorieDiff}
+                      </span>
                     )}
                   </div>
-                  <Button onClick={handleCalculate}>Calculate Macros</Button>
+                  {isAdjusted && (
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Base: {baseMacros.totalCalories}
+                    </p>
+                  )}
+                </div>
+                
+                <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-900/50">
+                  <h3 className="text-sm font-medium mb-1">Protein</h3>
+                  <div className="flex items-center gap-1">
+                    <p className="text-xl font-bold">{adjustedMacros.proteinGrams}g</p>
+                    {proteinDiff !== 0 && (
+                      <span className={`text-xs font-medium ${proteinDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {proteinDiff > 0 ? '+' : ''}{proteinDiff}g
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-blue-700 dark:text-blue-300">
+                    {adjustedMacros.proteinCalories} cal ({proteinPercentage}%)
+                  </p>
+                  {isAdjusted && proteinDiff !== 0 && (
+                    <p className="text-xs text-muted-foreground">
+                      Base: {baseMacros.proteinGrams}g
+                    </p>
+                  )}
+                </div>
+                
+                <div className="p-3 rounded-lg bg-yellow-100 dark:bg-yellow-900/50">
+                  <h3 className="text-sm font-medium mb-1">Fat</h3>
+                  <div className="flex items-center gap-1">
+                    <p className="text-xl font-bold">{adjustedMacros.fatGrams}g</p>
+                    {fatDiff !== 0 && (
+                      <span className={`text-xs font-medium ${fatDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {fatDiff > 0 ? '+' : ''}{fatDiff}g
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                    {adjustedMacros.fatCalories} cal ({fatPercentage}%)
+                  </p>
+                  {isAdjusted && fatDiff !== 0 && (
+                    <p className="text-xs text-muted-foreground">
+                      Base: {baseMacros.fatGrams}g
+                    </p>
+                  )}
+                </div>
+                
+                <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900/50">
+                  <h3 className="text-sm font-medium mb-1">Carbs</h3>
+                  <div className="flex items-center gap-1">
+                    <p className="text-xl font-bold">{adjustedMacros.carbGrams}g</p>
+                    {carbDiff !== 0 && (
+                      <span className={`text-xs font-medium ${carbDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {carbDiff > 0 ? '+' : ''}{carbDiff}g
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-green-700 dark:text-green-300">
+                    {adjustedMacros.carbCalories} cal ({carbPercentage}%)
+                  </p>
+                  {isAdjusted && carbDiff !== 0 && (
+                    <p className="text-xs text-muted-foreground">
+                      Base: {baseMacros.carbGrams}g
+                    </p>
+                  )}
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Results Section */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Your Results</CardTitle>
-            {isAdjusted && (
-              <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 rounded-full">
-                Adjusted
-              </span>
-            )}
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-800">
-                <h3 className="font-medium mb-2">Total Daily Calories</h3>
-                <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold">{adjustedMacros.totalCalories}</p>
-                  {calorieDiff !== 0 && (
-                    <span className={`text-sm font-medium ${calorieDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {calorieDiff > 0 ? '+' : ''}{calorieDiff}
-                    </span>
-                  )}
-                </div>
-                {isAdjusted && (
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Base: {baseMacros.totalCalories} calories
-                  </p>
-                )}
-              </div>
-              
-              <div className="p-4 rounded-lg bg-blue-100 dark:bg-blue-900/50">
-                <h3 className="font-medium mb-2">Protein</h3>
-                <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold">
-                    {adjustedMacros.proteinGrams}g ({adjustedMacros.proteinCalories} calories)
-                  </p>
-                  {proteinDiff !== 0 && (
-                    <span className={`text-sm font-medium ${proteinDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {proteinDiff > 0 ? '+' : ''}{proteinDiff}g
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm text-blue-700 dark:text-blue-300">{proteinPercentage}% of total calories</p>
-                {isAdjusted && proteinDiff !== 0 && (
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Base: {baseMacros.proteinGrams}g
-                  </p>
-                )}
-              </div>
-              
-              <div className="p-4 rounded-lg bg-yellow-100 dark:bg-yellow-900/50">
-                <h3 className="font-medium mb-2">Fat</h3>
-                <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold">
-                    {adjustedMacros.fatGrams}g ({adjustedMacros.fatCalories} calories)
-                  </p>
-                  {fatDiff !== 0 && (
-                    <span className={`text-sm font-medium ${fatDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {fatDiff > 0 ? '+' : ''}{fatDiff}g
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm text-yellow-700 dark:text-yellow-300">{fatPercentage}% of total calories</p>
-                {isAdjusted && fatDiff !== 0 && (
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Base: {baseMacros.fatGrams}g
-                  </p>
-                )}
-              </div>
-              
-              <div className="p-4 rounded-lg bg-green-100 dark:bg-green-900/50">
-                <h3 className="font-medium mb-2">Carbs</h3>
-                <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold">
-                    {adjustedMacros.carbGrams}g ({adjustedMacros.carbCalories} calories)
-                  </p>
-                  {carbDiff !== 0 && (
-                    <span className={`text-sm font-medium ${carbDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {carbDiff > 0 ? '+' : ''}{carbDiff}g
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm text-green-700 dark:text-green-300">{carbPercentage}% of total calories</p>
-                {isAdjusted && carbDiff !== 0 && (
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Base: {baseMacros.carbGrams}g
-                  </p>
-                )}
-              </div>
-            </div>
-            
-            {/* Add the chart */}
-            <div className="mt-6">
-              <MacroChart macros={adjustedMacros} />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Adjustment Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Adjust Your Goals</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <MacroAdjuster 
-              baseMacros={baseMacros} 
-              onMacrosChange={handleMacroAdjustment} 
-            />
-          </CardContent>
-        </Card>
+          {/* Adjustment Section */}
+          <Card className="flex-grow">
+            <CardHeader className="py-4">
+              <CardTitle className="text-lg">Adjust Your Goals</CardTitle>
+            </CardHeader>
+            <CardContent className="py-2">
+              <MacroAdjuster 
+                baseMacros={baseMacros} 
+                onMacrosChange={handleMacroAdjustment} 
+              />
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

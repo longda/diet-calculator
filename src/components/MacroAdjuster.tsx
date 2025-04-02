@@ -59,14 +59,15 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
   const carbAdjustment = adjustedMacros.carbGrams - baseMacros.carbGrams;
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-2 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
-        <div className="flex justify-between items-center mb-2">
+    <div className="space-y-4">
+      {/* Calories Adjustment */}
+      <div className="p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
+        <div className="flex justify-between items-center mb-1">
           <label htmlFor="calorie-adjustment" className="text-sm font-medium">
             Calorie Adjustment
           </label>
-          <div className="flex items-center gap-2">
-            <span className={calorieAdjustment > 0 ? "text-green-600" : calorieAdjustment < 0 ? "text-red-600" : ""}>
+          <div className="flex items-center gap-1">
+            <span className={calorieAdjustment > 0 ? "text-green-600 text-xs" : calorieAdjustment < 0 ? "text-red-600 text-xs" : "text-xs"}>
               {calorieAdjustment > 0 ? "+" : ""}{calorieAdjustment}
             </span>
             <Input
@@ -74,9 +75,9 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
               type="number"
               value={calorieAdjustment}
               onChange={(e) => handleCalorieChange(Number(e.target.value))}
-              className="w-20 h-8 text-right"
+              className="w-16 h-7 text-right text-sm"
             />
-            <span className="text-sm">cal</span>
+            <span className="text-xs ml-1">cal</span>
           </div>
         </div>
         <Slider
@@ -95,14 +96,16 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
-          <div className="flex justify-between items-center mb-2">
-            <label htmlFor="protein-adjustment" className="text-sm font-medium text-blue-600 dark:text-blue-400">
+      {/* Macronutrient Adjustments */}
+      <div className="grid grid-cols-3 gap-2">
+        {/* Protein */}
+        <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
+          <div className="flex justify-between items-center mb-1">
+            <label htmlFor="protein-adjustment" className="text-xs font-medium text-blue-600 dark:text-blue-400">
               Protein
             </label>
-            <div className="flex items-center gap-2">
-              <span className={proteinAdjustment > 0 ? "text-green-600" : proteinAdjustment < 0 ? "text-red-600" : ""}>
+            <div className="flex items-center gap-1">
+              <span className={proteinAdjustment > 0 ? "text-green-600 text-xs" : proteinAdjustment < 0 ? "text-red-600 text-xs" : "text-xs"}>
                 {proteinAdjustment > 0 ? "+" : ""}{proteinAdjustment}
               </span>
               <Input
@@ -110,9 +113,9 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
                 type="number"
                 value={proteinAdjustment}
                 onChange={(e) => handleProteinChange(Number(e.target.value))}
-                className="w-16 h-8 text-right"
+                className="w-14 h-7 text-right text-sm"
               />
-              <span className="text-sm">g</span>
+              <span className="text-xs ml-1">g</span>
             </div>
           </div>
           <Slider
@@ -125,20 +128,16 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
             className="bg-blue-100 dark:bg-blue-900/30"
             aria-label="Protein adjustment"
           />
-          <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>-50g</span>
-            <span>0g</span>
-            <span>+50g</span>
-          </div>
         </div>
 
-        <div className="p-4 bg-yellow-50 dark:bg-yellow-950/30 rounded-lg">
-          <div className="flex justify-between items-center mb-2">
-            <label htmlFor="fat-adjustment" className="text-sm font-medium text-yellow-600 dark:text-yellow-400">
+        {/* Fat */}
+        <div className="p-3 bg-yellow-50 dark:bg-yellow-950/30 rounded-lg">
+          <div className="flex justify-between items-center mb-1">
+            <label htmlFor="fat-adjustment" className="text-xs font-medium text-yellow-600 dark:text-yellow-400">
               Fat
             </label>
-            <div className="flex items-center gap-2">
-              <span className={fatAdjustment > 0 ? "text-green-600" : fatAdjustment < 0 ? "text-red-600" : ""}>
+            <div className="flex items-center gap-1">
+              <span className={fatAdjustment > 0 ? "text-green-600 text-xs" : fatAdjustment < 0 ? "text-red-600 text-xs" : "text-xs"}>
                 {fatAdjustment > 0 ? "+" : ""}{fatAdjustment}
               </span>
               <Input
@@ -146,9 +145,9 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
                 type="number"
                 value={fatAdjustment}
                 onChange={(e) => handleFatChange(Number(e.target.value))}
-                className="w-16 h-8 text-right"
+                className="w-14 h-7 text-right text-sm"
               />
-              <span className="text-sm">g</span>
+              <span className="text-xs ml-1">g</span>
             </div>
           </div>
           <Slider
@@ -161,35 +160,36 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
             className="bg-yellow-100 dark:bg-yellow-900/30"
             aria-label="Fat adjustment"
           />
-          <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>-30g</span>
-            <span>0g</span>
-            <span>+30g</span>
-          </div>
         </div>
 
-        <div className="p-4 bg-green-50 dark:bg-green-950/30 rounded-lg">
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-sm font-medium text-green-600 dark:text-green-400">
+        {/* Carbs (readonly) */}
+        <div className="p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
+          <div className="flex justify-between items-center mb-1">
+            <label className="text-xs font-medium text-green-600 dark:text-green-400">
               Carbs
             </label>
-            <div className="flex items-center gap-2">
-              <span className={carbAdjustment > 0 ? "text-green-600" : carbAdjustment < 0 ? "text-red-600" : ""}>
+            <div className="flex items-center gap-1">
+              <span className={carbAdjustment > 0 ? "text-green-600 text-xs" : carbAdjustment < 0 ? "text-red-600 text-xs" : "text-xs"}>
                 {carbAdjustment > 0 ? "+" : ""}{carbAdjustment}
               </span>
-              <span className="text-sm font-medium">
+              <span className="text-xs font-medium">
                 {adjustedMacros.carbGrams}g
               </span>
             </div>
           </div>
-          <div className="text-xs text-muted-foreground mt-4 text-center">
-            Carbs adjust automatically based on your protein, fat, and calorie adjustments.
+          <div className="text-xs text-muted-foreground mt-3 text-center">
+            Auto-adjusts with other changes
           </div>
         </div>
       </div>
 
-      <div className="flex justify-end mt-4">
-        <Button variant="outline" onClick={handleReset} disabled={calorieAdjustment === 0 && proteinAdjustment === 0 && fatAdjustment === 0}>
+      <div className="flex justify-end">
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={handleReset} 
+          disabled={calorieAdjustment === 0 && proteinAdjustment === 0 && fatAdjustment === 0}
+        >
           Reset Adjustments
         </Button>
       </div>
