@@ -81,6 +81,9 @@ export default function Home() {
   const fatDiff = adjustedMacros.fatGrams - baseMacros.fatGrams;
   const carbDiff = adjustedMacros.carbGrams - baseMacros.carbGrams;
 
+  // Get the raw calorie adjustment if any
+  const calorieAdjustment = adjustedMacros.calorieAdjustment || 0;
+
   return (
     <div className="container mx-auto py-4 px-4 max-w-7xl">
       <h1 className="text-2xl font-bold text-center mb-4">
@@ -155,9 +158,9 @@ export default function Home() {
                   <h3 className="text-sm font-medium mb-1">Total Calories</h3>
                   <div className="flex items-center gap-1">
                     <p className="text-xl font-bold">{adjustedMacros.totalCalories}</p>
-                    {calorieDiff !== 0 && (
-                      <span className={`text-xs font-medium ${calorieDiff > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                        {calorieDiff > 0 ? '+' : ''}{calorieDiff}
+                    {calorieAdjustment !== 0 && (
+                      <span className={`text-xs font-medium ${calorieAdjustment > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {calorieAdjustment > 0 ? '+' : ''}{calorieAdjustment}
                       </span>
                     )}
                   </div>
