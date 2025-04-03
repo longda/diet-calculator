@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -17,19 +17,6 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
   const [fatAdjustment, setFatAdjustment] = useState(0);
   const [carbAdjustment, setCarbAdjustment] = useState(0);
   
-  const handleReset = useCallback(() => {
-    setCalorieAdjustment(0);
-    setProteinAdjustment(0);
-    setFatAdjustment(0);
-    setCarbAdjustment(0);
-    onMacrosChange(baseMacros);
-  }, [baseMacros, onMacrosChange]);
-
-  // Reset adjustments when base macros change (i.e., when weight changes)
-  useEffect(() => {
-    handleReset();
-  }, [handleReset]);
-
   // Handle adjustments
   const handleCalorieChange = (value: number) => {
     // When calories are adjusted, reset macro adjustments
@@ -68,6 +55,22 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
     );
     onMacrosChange(updatedMacros);
   };
+
+  const handleReset = () => {
+    setCalorieAdjustment(0);
+    setProteinAdjustment(0);
+    setFatAdjustment(0);
+    setCarbAdjustment(0);
+    onMacrosChange(baseMacros);
+  };
+
+  // Reset adjustments when base macros change (i.e., when weight changes)
+  useEffect(() => {
+    setCalorieAdjustment(0);
+    setProteinAdjustment(0);
+    setFatAdjustment(0);
+    setCarbAdjustment(0);
+  }, [baseMacros]);
 
   // Calculate exact macro calorie impacts
   const proteinCalorieChange = proteinAdjustment * 4;
@@ -118,7 +121,7 @@ export function MacroAdjuster({ baseMacros, onMacrosChange }: MacroAdjusterProps
         </div>
       </div>
 
-      {/* Macronutrient Adjustments - Disabled when calories are adjusted */}
+      {/* Macronutrient Adjustments */}
       <div className="grid grid-cols-3 gap-2">
         {/* Protein */}
         <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
