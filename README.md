@@ -27,7 +27,7 @@ A simple web application that calculates daily caloric needs and macronutrient d
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/diet-calculator.git
+   git clone https://github.com/longda/diet-calculator.git
    cd diet-calculator
    ```
 

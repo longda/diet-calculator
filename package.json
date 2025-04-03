@@ -2,6 +2,9 @@
   "name": "diet-calculator",
   "version": "0.1.0",
   "private": true,
+  "description": "Calculate and adjust your daily caloric needs and macronutrient distribution",
+  "author": "longda",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
