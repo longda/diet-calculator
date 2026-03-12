@@ -30,14 +30,14 @@ export function MacroChart({ macros }: MacroChartProps) {
           macros.carbCalories
         ],
         backgroundColor: [
-          'rgba(54, 162, 235, 0.7)',  // Blue for protein
-          'rgba(255, 206, 86, 0.7)',  // Yellow for fat
-          'rgba(75, 192, 192, 0.7)',  // Green for carbs
+          'rgba(59, 130, 246, 0.8)',   // blue-500 protein
+          'rgba(234, 179, 8, 0.8)',    // yellow-500 fat
+          'rgba(34, 197, 94, 0.8)',   // green-500 carbs
         ],
         borderColor: [
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
+          'rgba(59, 130, 246, 1)',
+          'rgba(234, 179, 8, 1)',
+          'rgba(34, 197, 94, 1)',
         ],
         borderWidth: 1,
       },
@@ -73,8 +73,8 @@ export function MacroChart({ macros }: MacroChartProps) {
   };
 
   return (
-    <div className="max-w-full mx-auto">
-      <Pie data={data} options={options} height={180} />
+    <div className="max-w-full mx-auto text-foreground">
+      <Pie data={data} options={options} height={140} />
     </div>
   );
 } 
