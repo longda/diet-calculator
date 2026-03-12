@@ -2,6 +2,7 @@
   "name": "diet-calculator",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.15.0",
   "description": "Calculate and adjust your daily caloric needs and macronutrient distribution",
   "author": "longda",
   "license": "MIT",
@@ -12,6 +13,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-label": "^2.1.1",
+    "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slider": "^1.2.3",
     "@radix-ui/react-slot": "^1.1.2",
     "chart.js": "^4.4.8",

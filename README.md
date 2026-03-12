@@ -8,13 +8,16 @@ A simple web application that calculates daily caloric needs and macronutrient d
 - Dynamic updates to macro distribution
 - Goal-based adjustments for caloric intake and macros
 - Responsive design for mobile and desktop
+- Dark mode with neutral theme
 
 ## Tech Stack
 
 - **Frontend Framework**: Next.js 15 with App Router
 - **UI Library**: React 19
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui (Badge, Button, Card, Input, Label, Slider, Alert)
+- **Charts**: Chart.js
+- **Package Manager**: pnpm
 - **Hosting**: Vercel (recommended)
 
 ## Getting Started
@@ -22,6 +25,7 @@ A simple web application that calculates daily caloric needs and macronutrient d
 ### Prerequisites
 
 - Node.js 18.18.0 or later
+- pnpm (install via `npm install -g pnpm` or [corepack](https://nodejs.org/api/corepack.html))
 
 ### Installation
 
@@ -33,12 +37,12 @@ A simple web application that calculates daily caloric needs and macronutrient d
 
 2. Install dependencies
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. Run the development server
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application
@@ -55,7 +59,7 @@ A simple web application that calculates daily caloric needs and macronutrient d
 The easiest way to deploy this application is using Vercel:
 
 ```bash
-npm install -g vercel
+pnpm add -g vercel
 vercel
 ```
 
